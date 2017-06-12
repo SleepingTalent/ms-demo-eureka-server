@@ -8,7 +8,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.noveria.server</groupId>
+	<groupId>com.babcock.server</groupId>
 	<artifactId>eureka-server-parent</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 

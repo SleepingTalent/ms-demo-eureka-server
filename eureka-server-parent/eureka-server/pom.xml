@@ -3,16 +3,22 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.noveria.server</groupId>
+		<groupId>com.babcock.server</groupId>
 		<artifactId>eureka-server-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.noveria.server</groupId>
+	<groupId>com.babcock.server</groupId>
 	<artifactId>eureka-server</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	
 	<packaging>jar</packaging>
+
+	<properties>
+		<server.jar.name>eureka-server-${parent.version}</server.jar.name>
+		<executable.jar.postfix>exec</executable.jar.postfix>
+		<executable.server.jar.name>${server.jar.name}-${executable.jar.postfix}</executable.server.jar.name>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -33,6 +39,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>4.9</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
@@ -49,25 +61,6 @@
 		</dependency>
 	</dependencies>
 
-	<profiles>
-		<profile>
-			<id>dev-eureka-server</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<config.url>http://{TODO:CONFIG-IP}/config-service/</config.url>
-				<server.jar.name>dev-eureka-server</server.jar.name>
-			</properties>
-		</profile>
-		<profile>
-			<id>qa-eureka-server</id>
-			<properties>
-				<config.url>http://{QA:CONFIG-IP}/config-service/</config.url>
-				<server.jar.name>qa-eureka-server</server.jar.name>
-			</properties>
-		</profile>
-	</profiles>
 
 	<build>
 		<finalName>${server.jar.name}</finalName>
@@ -93,6 +86,9 @@
 				<executions>
 					<execution>
 						<id>build-eureka-server-zip</id>
+						<configuration>
+							<appendAssemblyId>true</appendAssemblyId>
+						</configuration>
 						<phase>verify</phase>
 						<goals>
 							<goal>single</goal>
@@ -133,6 +129,9 @@
 						<goals>
 							<goal>repackage</goal>
 						</goals>
+						<configuration>
+							<classifier>${executable.jar.postfix}</classifier>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

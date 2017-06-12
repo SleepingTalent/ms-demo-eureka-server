@@ -1,1 +1,2 @@
-# ms-demo-eureka-server
+# eureka-server
+Spring Cloud Based Eureka Registration Server 
